@@ -21,11 +21,11 @@ jobs:
     steps:
       - name: 'Download artifact'
         id: find-artifact
-        uses: actions/github-script@v3.1.0
+        uses: actions/github-script@v6
         with:
           result-encoding: string
           script: |
-            var artifacts = await github.actions.listWorkflowRunArtifacts({
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: ${{github.event.workflow_run.id }},
@@ -35,7 +35,7 @@ jobs:
             });
             if (matchArtifacts.length == 0) { return "false" }
             var matchArtifact = matchArtifacts[0];
-            var download = await github.actions.downloadArtifact({
+            var download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
                artifact_id: matchArtifact.id,
@@ -48,14 +48,14 @@ jobs:
         if: ${{ steps.find-artifact.outputs.result == 'true' }}
       - name: 'Comment on PR'
         if: ${{ steps.find-artifact.outputs.result == 'true' }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var fs = require('fs');
             var issue_number = Number(fs.readFileSync('./NR'));
             var last_example_run = fs.readFileSync('./last_example_run');
-            await github.issues.createComment({
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
@@ -70,11 +70,11 @@ jobs:
     steps:
       - name: 'Download artifact'
         id: find-artifact
-        uses: actions/github-script@v3.1.0
+        uses: actions/github-script@v6
         with:
           result-encoding: string
           script: |
-            var artifacts = await github.actions.listWorkflowRunArtifacts({
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: ${{github.event.workflow_run.id }},
@@ -84,7 +84,7 @@ jobs:
             });
             if (matchArtifacts.length == 0) { return "false" }
             var matchArtifact = matchArtifacts[0];
-            var download = await github.actions.downloadArtifact({
+            var download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
                artifact_id: matchArtifact.id,
@@ -97,14 +97,14 @@ jobs:
         if: ${{ steps.find-artifact.outputs.result == 'true' }}
       - name: 'Comment on PR'
         if: ${{ steps.find-artifact.outputs.result == 'true' }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var fs = require('fs');
             var issue_number = Number(fs.readFileSync('./NR'));
             if (existsSync('./missing-metadata')) {
-              await github.issues.createComment({
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issue_number,
@@ -112,7 +112,7 @@ jobs:
               });
             }
             if (existsSync('./missing-update')) {
-              await github.issues.createComment({
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issue_number,
@@ -128,11 +128,11 @@ jobs:
     steps:
       - name: 'Download artifact'
         id: find-artifact
-        uses: actions/github-script@v3.1.0
+        uses: actions/github-script@v6
         with:
           result-encoding: string
           script: |
-            var artifacts = await github.actions.listWorkflowRunArtifacts({
+            var artifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: ${{github.event.workflow_run.id }},
@@ -142,7 +142,7 @@ jobs:
             });
             if (matchArtifacts.length == 0) { return "false" }
             var matchArtifact = matchArtifacts[0];
-            var download = await github.actions.downloadArtifact({
+            var download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
                repo: context.repo.repo,
                artifact_id: matchArtifact.id,
@@ -155,13 +155,13 @@ jobs:
         if: ${{ steps.find-artifact.outputs.result == 'true' }}
       - name: 'Comment on PR'
         if: ${{ steps.find-artifact.outputs.result == 'true' }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             var fs = require('fs');
             var issue_number = Number(fs.readFileSync('./NR'));
-            await github.issues.createComment({
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
