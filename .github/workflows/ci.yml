@@ -32,10 +32,15 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.MSRV }}
-      - name: Install alsa and udev
-        run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
+      - name: debug
+        run: |
+          echo ${{ github.event_name }}
       - name: Run cargo check
         run: cargo check
+      - name: debug 2
+        if: ${{ failure() }}
+        run: |
+          echo "failed!"
       - name: Save PR number
         if: ${{ failure() && github.event_name == 'pull_request' }}
         run: |
