@@ -16,15 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-msrv-${{ hashFiles('**/Cargo.toml') }}
       - name: get MSRV
         run: |
           msrv=`cargo metadata --no-deps --format-version 1 | jq --raw-output '.packages[] | select(.name=="test-actions") | .rust_version'`
@@ -32,15 +23,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.MSRV }}
-      - name: debug
-        run: |
-          echo ${{ toJSON(github.event) }}
       - name: Run cargo check
         run: cargo check
-      - name: debug 2
-        if: ${{ failure() }}
-        run: |
-          echo "failed!"
       - name: Save PR number
         if: ${{ failure() && github.event_name == 'pull_request' }}
         run: |
