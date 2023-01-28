@@ -34,7 +34,7 @@ jobs:
           toolchain: ${{ env.MSRV }}
       - name: debug
         run: |
-          echo ${{ github.event }}
+          echo ${{ toJSON(github.event) }}
       - name: Run cargo check
         run: cargo check
       - name: debug 2
