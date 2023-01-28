@@ -27,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-cargo-msrv-${{ hashFiles('**/Cargo.toml') }}
       - name: get MSRV
         run: |
-          msrv=`cargo metadata --no-deps --format-version 1 | jq --raw-output '.packages[] | select(.name=="bevy") | .rust_version'`
+          msrv=`cargo metadata --no-deps --format-version 1 | jq --raw-output '.packages[] | select(.name=="test-actions") | .rust_version'`
           echo "MSRV=$msrv" >> $GITHUB_ENV
       - uses: dtolnay/rust-toolchain@master
         with:
