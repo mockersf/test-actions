@@ -13,5 +13,5 @@ jobs:
     runs-on: ubuntu-latest
     if: contains( github.event.pull_request.labels.*.name, 'Breaking-Change')
     steps:
-      - runs: |
+      - run: |
           echo {{ github.event }}
