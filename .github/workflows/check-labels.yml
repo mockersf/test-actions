@@ -26,5 +26,5 @@ jobs:
               body: `It looks like your PR is a breaking change, but you didn't provide a migration guide.
 
               Could you add some context on what users should update when this change get released in a new version of Bevy?
-              It will be used to help writing the migration guide for the version.`
+              It will be used to help writing the migration guide for the version. Putting it after a \`## Migration Guide\` will help it get automatically picked up by our tooling.`
             })
