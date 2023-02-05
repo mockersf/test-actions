@@ -11,7 +11,7 @@ on:
 jobs:
   comment-on-breaking-change-label:
     runs-on: ubuntu-latest
-    if: contains( github.event.pull_request.labels.*.name, 'Breaking-Change')
+    if: contains( github.event.pull_request.labels.*.name, 'Bug')
     steps:
       - run: |
           echo {{ github.event }}
