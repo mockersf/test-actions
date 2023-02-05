@@ -11,7 +11,7 @@ on:
 jobs:
   comment-on-breaking-change-label:
     runs-on: ubuntu-latest
-    if: contains( github.event.pull_request.labels.*.name, 'Bug')
+    if: github.event.label.name == "bug"
     steps:
       - run: |
           echo ${{ toJson(github) }}
