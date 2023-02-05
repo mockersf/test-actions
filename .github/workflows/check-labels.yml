@@ -8,6 +8,9 @@ on:
     types:
       - labeled
 
+permissions:
+  pull-requests: 'write'
+
 jobs:
   comment-on-breaking-change-label:
     runs-on: ubuntu-latest
